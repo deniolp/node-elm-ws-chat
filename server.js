@@ -2,10 +2,11 @@
 
 const {Server} = require(`ws`);
 const {v4} = require(`uuid`);
-const {writeFile} = require(`fs`);
+const {writeFile, readFileSync, existsSync} = require(`fs`);
 
 const clients = {};
-const messages = [];
+const log = existsSync(`log.txt`) && readFileSync(`log.txt`);
+const messages = JSON.parse(log) || [];
 
 const webSocketSever = new Server({port: 8000});
 
