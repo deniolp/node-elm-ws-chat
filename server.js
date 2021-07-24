@@ -13,6 +13,7 @@ webSocketSever.on(`connection`, (ws) => {
     clients[id] = ws;
 
     console.log(`New client was connected: ${id}`);
+    ws.send(JSON.stringify(messages));
 
     ws.on(`message`, (rawMessage) => {
         const {name, message} = JSON.parse(rawMessage);

@@ -14,9 +14,9 @@
   </form>
   <div id="chat"></div>
   <script>
-    const chatElement = document.getElementById("chat");
-    const formElement = document.getElementById("messageForm");
-    const ws = new WebSocket("ws://localhost:8000");
+    const chatElement = document.getElementById(`chat`);
+    const formElement = document.getElementById(`messageForm`);
+    const ws = new WebSocket(`ws://localhost:8000`);
 
     ws.onmessage = (message) => {
       const messages = JSON.parse(message.data);
@@ -29,14 +29,14 @@
 
     const send = (event) => {
       event.preventDefault();
-      const name = document.getElementById("name").value;
-      const message = document.getElementById("message").value;
+      const name = document.getElementById(`name`).value;
+      const message = document.getElementById(`message`).value;
 
       ws.send(JSON.stringify({name, message}));
       return false;
     }
 
-    formElement.addEventListener("submit", send);
+    formElement.addEventListener(`submit`, send);
   </script>
 </body>
 </html>
