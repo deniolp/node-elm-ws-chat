@@ -2,6 +2,7 @@
 
 const {Server} = require(`ws`);
 const {v4} = require(`uuid`);
+const {writeFile} = require(`fs`);
 
 const clients = {};
 const messages = [];
@@ -28,3 +29,14 @@ webSocketSever.on(`connection`, (ws) => {
         console.log(`Client was closed: ${id}`)
     })
 })
+
+process.on(`SIGINT`, () => {
+  webSocketSever.close();
+  writeFile(`log.txt`, JSON.stringify(messages), (err) => {
+    if (err) {
+      console.log(err);
+    }
+
+    process.exit();
+  })
+});
