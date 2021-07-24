@@ -19,7 +19,7 @@
     const ws = new WebSocket("ws://localhost:8000");
 
     ws.onmessage = (message) => {
-
+      console.log(message.data);
     }
 
     const send = (event) => {
