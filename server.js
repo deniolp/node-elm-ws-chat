@@ -8,11 +8,10 @@ const clients = {};
 const webSocketSever = new Server({port: 8000});
 
 webSocketSever.on(`connection`, (ws) => {
-    const id = uuid();
+    const id = v4();
     clients[id] = ws;
 
     console.log(`New client was connected: ${id}`);
-    ws.send(JSON.stringify(messages));
 
     ws.on(`message`, (rawMessage) => {
         //
