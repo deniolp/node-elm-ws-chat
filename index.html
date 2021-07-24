@@ -19,7 +19,12 @@
     const ws = new WebSocket("ws://localhost:8000");
 
     ws.onmessage = (message) => {
-      console.log(message.data);
+      const messages = JSON.parse(message.data);
+      messages.forEach((it) => {
+        const messageElement = document.createElement(`div`);
+        messageElement.appendChild(document.createTextNode(`${it.name}: ${it.message}`));
+        chatElement.append(messageElement);
+      })
     }
 
     const send = (event) => {
