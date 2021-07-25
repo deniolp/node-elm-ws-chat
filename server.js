@@ -8,7 +8,7 @@ const clients = {};
 const log = existsSync(`log.txt`) && readFileSync(`log.txt`);
 const messages = JSON.parse(log) || [];
 
-const webSocketSever = new Server({port: 8000});
+const webSocketSever = new Server({port: 4000});
 
 webSocketSever.on(`connection`, (ws) => {
     const id = v4();
@@ -21,7 +21,7 @@ webSocketSever.on(`connection`, (ws) => {
         const {name, message} = JSON.parse(rawMessage);
         messages.push({name, message});
         for (const id in clients) {
-          clients[id].send(JSON.stringify([{name, message}]));
+          clients[id].send(JSON.stringify(messages));
         }
     })
 
