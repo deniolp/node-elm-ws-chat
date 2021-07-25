@@ -163,7 +163,7 @@ view model =
 
 formSection : Model -> Html Msg
 formSection model =
-    Html.form []
+    Html.form [ onSubmit SendMessage ]
         [ input
             [ type_ "text"
             , name "name"
@@ -181,9 +181,7 @@ formSection model =
             ]
             []
         , button
-            [ type_ "button"
-            , onClick SendMessage
-            ]
+            [ type_ "submit" ]
             [ text "Send" ]
         ]
 
