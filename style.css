@@ -20,11 +20,16 @@ li {
 }
 
 .name-in-chat {
-  width: 15%;
+  width: 10%;
   color: grey;
 }
 
 .message-in-chat {
+  width: 60%;
   color: rgb(129, 3, 28);
 }
 
+.time-in-chat {
+  width: 20%;
+  color: cornflowerblue;
+}

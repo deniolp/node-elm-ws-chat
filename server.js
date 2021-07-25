@@ -3,6 +3,7 @@
 const {Server} = require(`ws`);
 const {v4} = require(`uuid`);
 const {writeFile, readFileSync, existsSync} = require(`fs`);
+const intl = require(`intl`);
 
 const clients = {};
 const log = existsSync(`log.txt`) && readFileSync(`log.txt`);
@@ -19,9 +20,10 @@ webSocketSever.on(`connection`, (ws) => {
 
     ws.on(`message`, (rawMessage) => {
         const {name, message} = JSON.parse(rawMessage);
-        messages.push({name, message});
+        const time = new Intl.DateTimeFormat(`en-GB`, {hour: `numeric`, minute: `numeric`, hour12: false, year: 'numeric', month: 'numeric', day: 'numeric'}).format(new Date());
+        messages.push({name, message, time});
         for (const id in clients) {
-          clients[id].send(JSON.stringify([{name, message}]));
+          clients[id].send(JSON.stringify([{name, message, time}]));
         }
     })
 

@@ -39,6 +39,7 @@ port messageReceiver : (String -> msg) -> Sub msg
 type alias Message =
     { name : String
     , message : String
+    , time : String
     }
 
 
@@ -50,7 +51,7 @@ type alias Model =
 
 initModel : Model
 initModel =
-    Model { name = "", message = "" } []
+    Model { name = "", message = "", time = "" } []
 
 
 init : () -> ( Model, Cmd Msg )
@@ -98,7 +99,7 @@ update msg model =
         UpdateChat list ->
             let
                 newModel =
-                    { model | allMessages = List.concat [ model.allMessages, list ], currentMessage = Message model.currentMessage.name "" }
+                    { model | allMessages = List.concat [ model.allMessages, list ], currentMessage = Message model.currentMessage.name "" "" }
             in
             ( newModel, Cmd.none )
 
@@ -130,10 +131,11 @@ encodeData data =
 
 recordDecoder : D.Decoder Message
 recordDecoder =
-    D.map2
+    D.map3
         Message
         (D.field "name" D.string)
         (D.field "message" D.string)
+        (D.field "time" D.string)
 
 
 listOfRecordsDecoder : D.Decoder (List Message)
@@ -197,6 +199,7 @@ chatRow : Message -> Html Msg
 chatRow item =
     li []
         [ div [ class "name-in-chat" ] [ text (item.name ++ ":") ]
+        , div [ class "time-in-chat" ] [ text item.time ]
         , div [ class "message-in-chat" ] [ text item.message ]
         ]
 
