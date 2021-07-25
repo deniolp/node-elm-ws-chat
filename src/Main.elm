@@ -98,7 +98,7 @@ update msg model =
         UpdateChat list ->
             let
                 newModel =
-                    { model | allMessages = List.concat [ model.allMessages, list ], currentMessage = Message "" "" }
+                    { model | allMessages = List.concat [ model.allMessages, list ], currentMessage = Message model.currentMessage.name "" }
             in
             ( newModel, Cmd.none )
 
@@ -198,8 +198,8 @@ chatSection model =
 chatRow : Message -> Html Msg
 chatRow item =
     li []
-        [ div [] [ text item.name ]
-        , div [] [ text item.message ]
+        [ div [ class "name-in-chat" ] [ text (item.name ++ ":") ]
+        , div [ class "message-in-chat" ] [ text item.message ]
         ]
 
 
