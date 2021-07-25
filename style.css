@@ -1,0 +1,30 @@
+html {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	position: relative;
+}
+
+*, *:before, *:after {
+	-webkit-box-sizing: inherit;
+	box-sizing: inherit;
+}
+
+ul {
+  padding-left: 10px;
+}
+
+li {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.name-in-chat {
+  width: 15%;
+  color: grey;
+}
+
+.message-in-chat {
+  color: rgb(129, 3, 28);
+}
+
