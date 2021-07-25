@@ -63,7 +63,7 @@ init _ =
 
 
 type Msg
-    = AddMessage
+    = SendMessage
     | UpdateChat (List Message)
     | InputName String
     | InputMessage String
@@ -75,7 +75,7 @@ update msg model =
         InputName name ->
             let
                 newModel =
-                    changeRecord
+                    changeInnerRecord
                         "name"
                         name
                         model
@@ -85,26 +85,26 @@ update msg model =
         InputMessage message ->
             let
                 newModel =
-                    changeRecord
+                    changeInnerRecord
                         "message"
                         message
                         model
             in
             ( newModel, Cmd.none )
 
-        AddMessage ->
+        SendMessage ->
             ( model, sendMessage (E.encode 0 (encodeData model.currentMessage)) )
 
         UpdateChat list ->
             let
                 newModel =
-                    { model | allMessages = list, currentMessage = Message "" "" }
+                    { model | allMessages = List.concat [ model.allMessages, list ], currentMessage = Message "" "" }
             in
             ( newModel, Cmd.none )
 
 
-changeRecord : String -> String -> Model -> Model
-changeRecord field val ({ currentMessage } as inner) =
+changeInnerRecord : String -> String -> Model -> Model
+changeInnerRecord field val ({ currentMessage } as inner) =
     case field of
         "name" ->
             { inner
@@ -182,7 +182,7 @@ formSection model =
             []
         , button
             [ type_ "button"
-            , onClick AddMessage
+            , onClick SendMessage
             ]
             [ text "Send" ]
         ]
